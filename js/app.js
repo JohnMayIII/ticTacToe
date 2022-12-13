@@ -3,6 +3,9 @@ class Game{
         this.gameStatus = document.getElementById('gameStatus')
         this.xWins = document.getElementById('xWins')
         this.oWins = document.getElementById('oWins')
+        this.submitBtn = document.getElementById('submitBtn')
+        this.playerOne = document.getElementById('redWins')
+        this.playerTwo = document.getElementById('blueWins')
         this.winCount = {
             x: 0,
             o: 0
@@ -26,10 +29,18 @@ class Game{
             [2,4,6]
         ]
 
+        this.players = {
+            player1: 'Player 1',
+            player2: 'Player 2'
+        }
+
         this.gameRestartBtn = document.getElementById('gameRestart')
     }
     
     init(){
+        this.playerOne.innerText = this.players.player1
+        this.playerTwo.innerText = this.players.player2
+        this.getPlayersNames()
         this.currPlayerTurn()
         this.handleCellClicked()
         this.gameRestartBtn.addEventListener('click', ()=>{
@@ -115,10 +126,11 @@ class Game{
             this.supremeCheck()
             
             if(winner == 'X'){
-                this.winCount.x = this.winCount.x++
+                this.winCount.x = this.winCount.x + 1
+                console.log(this.winCount)
                 this.xWins.innerHTML +=`<span> ${tallyMark} </span>`
             } else{
-                this.winCount.o = this.winCount.o++
+                this.winCount.o = this.winCount.o + 1
                 this.oWins.innerHTML +=`<span> ${tallyMark} </span>`
             }
             this.gameActive = false
@@ -143,16 +155,33 @@ class Game{
         let xWinTotal = this.winCount.x
         let oWinTotal = this.winCount.o
 
+        console.log(xWinTotal)
+        console.log(oWinTotal)
+
+
         
-        if(xWinTotal == 2){
-            console.log('click')
-            redWins.innerText = `SUPREME VICTOR`
+        if(xWinTotal == 9){
+            redWins.innerText = `${player1.value} IS THE SUPREME VICTOR`
+            gameBoard.classList.add('d-none')
+        }else if(oWinTotal == 9){
+            blueWins.innerText = `${player2.value} IS THE SUPREME VICTOR`
             gameBoard.classList.add('d-none')
         }
-        if(oWinTotal == 2){
-            blueWins.innerTexti = `SUPREME VICTOR`
-            gameBoard.classList.add('d-none')
-        }
+    }
+
+    getPlayersNames(){
+        const submitBtn = this.submitBtn
+        const playerOne = this.playerOne
+        const playerTwo = this.playerTwo
+
+        
+        submitBtn.addEventListener('click', (e)=>{
+            e.preventDefault()
+            const player1Name = document.getElementById('player1').value
+            const player2Name = document.getElementById('player2').value
+            playerOne.innerText = player1Name
+            playerTwo.innerText = player2Name
+        })
     }
 
     playerChange(){
@@ -175,8 +204,22 @@ class Game{
         })
 
         gameBoard.classList.remove('d-none')
-        redWins.innerText = 'x win totals'
-        blueWins.innerText = 'o win totals'
+        const player1Name = document.getElementById('player1').value
+        const player2Name = document.getElementById('player2').value
+
+        redWins.innerText = player1Name
+        blueWins.innerText = player2Name
+
+        let xWinTotal = this.winCount.x
+        let oWinTotal = this.winCount.o
+
+        if(xWinTotal == 10 || oWinTotal == 10){
+            this.xWins.innerHTML = ''
+            this.oWins.innerHTML = ''
+
+            this.winCount.x = 0
+            this.winCount.o = 0
+        }
     }
 }
 

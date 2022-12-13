@@ -82,7 +82,7 @@ button{
 }
 
 .win-count{
-    width: 90%;
+    width: 200px;
     height: 200px;
     background-color: #fff;
     border: 2px solid #005a92;
@@ -92,4 +92,26 @@ button{
 .tally{
     font-size: 28px;
     color: purple;
+}
+
+#playerForm{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    margin-right: 0;
+    padding: 15px;
+    width: 25%;
+    background-color: #fff;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+label{
+    display: block;
+    margin: 10px 0;
+
+}
+
+header{
+    position: relative;
 }
